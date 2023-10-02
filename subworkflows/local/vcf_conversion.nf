@@ -1,15 +1,16 @@
 /* --    IMPORT LOCAL MODULES/SUBWORKFLOWS     -- */
 include { LIFTOVER   }             from '../../modules/local/liftover.nf'
 
-workflow vcf_conversion {
+workflow VCF_CONVERSION {
 
     take:
     vcfs
 
     main:
         //
-        // filter sites
+        // filter sites of all vcf files
         //
+
         FILTER_VCF (
 
         )
