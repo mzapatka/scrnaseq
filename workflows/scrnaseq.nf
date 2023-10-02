@@ -46,6 +46,7 @@ include { CELLRANGER_ALIGN  } from "../subworkflows/local/align_cellranger"
 include { UNIVERSC_ALIGN    } from "../subworkflows/local/align_universc"
 include { MTX_CONVERSION    } from "../subworkflows/local/mtx_conversion"
 include { GTF_GENE_FILTER   } from '../modules/local/gtf_gene_filter'
+include { FILTER_VCF        } from "../modules/local/filter_vcf.nf"
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT NF-CORE MODULES/SUBWORKFLOWS
@@ -129,6 +130,16 @@ workflow SCRNASEQ {
     }
 
     ch_filter_gtf = GTF_GENE_FILTER ( ch_genome_fasta, ch_gtf ).gtf
+
+    // prepare VCF files for
+    if (params.snpdemux == "vireo"){
+    // prepare multivcf file from individual vcfs
+
+        FILTER_VCF ( ch_fastq, ch_vcfs)
+
+
+    }
+
 
     // Run kallisto bustools pipeline
     if (params.aligner == "kallisto") {
